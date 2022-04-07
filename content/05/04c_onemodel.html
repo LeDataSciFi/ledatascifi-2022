@@ -818,7 +818,10 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="section" id="an-intro-to-sk-learn-fitting-one-model">
 <h1><span class="section-number">5.4.2. </span>An intro to SK-learn + Fitting One Model<a class="headerlink" href="#an-intro-to-sk-learn-fitting-one-model" title="Permalink to this headline">¶</a></h1>
-<p>This is just showing you how sklearn fits ONE model for ONE set of hyperparameters on a generic set of X and y. The idea is to show you the <em>flow</em> of how we work through estimation. Do NOT wholesale copy this code for assignments - it is deliberately missing a bunch of best practices, as we build up your familiarity with developing a ML model. But the steps here are universally present in everything we do.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This page is just showing you how sklearn fits ONE model for ONE set of hyperparameters on a generic set of X and y. The idea is to show you the <em>flow</em> of how we work through estimation. Do NOT wholesale copy this code for assignments - it is deliberately missing a bunch of best practices, as we build up your familiarity with developing a ML model. But the steps here are universally present in everything we do.</p>
+</div>
 <div class="section" id="five-steps-to-fit-a-model">
 <h2><span class="section-number">5.4.2.1. </span>Five steps to fit a model<a class="headerlink" href="#five-steps-to-fit-a-model" title="Permalink to this headline">¶</a></h2>
 <p><strong>Step 1: Import class of model from sklearn</strong></p>
@@ -862,7 +865,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<p><strong>Step 3: Choose initial model hyperparameters by instantiating this class with desired values</strong></p>
+<p><strong>Step 3: Choose the model you want and “instantiate” that class of model</strong></p>
+<p>Important: For many kinds of models, you will set some desired values for parameters of that model. These are referred to as “hyperparameters”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create (&quot;instantiate&quot;) the class, here I set hyper param alpha=1</span>
@@ -872,6 +876,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p><strong>Step 4: <code class="docutils literal notranslate"><span class="pre">fit()</span></code> the model on training data</strong></p>
+<p>This is done by typing <code class="docutils literal notranslate"><span class="pre">&lt;modelname&gt;.fit(X_train,y_train)</span></code>. Here, our model object is called <code class="docutils literal notranslate"><span class="pre">ridge</span></code>, so:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ridge</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">)</span>
@@ -886,8 +891,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <p><strong>Step 5: Apply the model to new data. Either:</strong></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;modelname&gt;.predict(X_test)</span></code> will predict what <span class="math notranslate nohighlight">\(y\)</span> should be using <span class="math notranslate nohighlight">\(X_test\)</span>, and is used in <a class="reference internal" href="03e_whichModel.html"><span class="doc std std-doc">supervised learning</span></a> tasks</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;modelname&gt;.transform(X_test)</span></code> will change <span class="math notranslate nohighlight">\(X_test\)</span> using the model, and is common with preprocessing and <a class="reference internal" href="03e_whichModel.html"><span class="doc std std-doc">unsupervised learning</span></a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;modelname&gt;.predict(X_test)</span></code> will predict what <span class="math notranslate nohighlight">\(y\)</span> should be using <span class="math notranslate nohighlight">\(X_{test}\)</span>, and is used in <a class="reference internal" href="03e_whichModel.html"><span class="doc std std-doc">supervised learning</span></a> tasks</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;modelname&gt;.transform(X_test)</span></code> will change <span class="math notranslate nohighlight">\(X_{test}\)</span> using the model, and is common with preprocessing and <a class="reference internal" href="03e_whichModel.html"><span class="doc std std-doc">unsupervised learning</span></a></p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

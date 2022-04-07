@@ -799,33 +799,22 @@ const thebe_selector_output = ".output, .cell_output"
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#cv-in-practice">
-   5.4.3.1. CV in practice
+  <a class="reference internal nav-link" href="#using-cv-in-practice">
+   5.4.3.1. Using CV in practice
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#step-1-set-up-your-test-and-train-split-samples">
-     5.4.3.1.1.
-     <strong>
-      STEP 1:
-     </strong>
-     Set up your test and train split samples
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#step-2-set-up-the-cv">
-     5.4.3.1.2.
-     <strong>
-      STEP 2:
-     </strong>
-     Set up the CV
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-2-set-up-the-cv">
+   5.4.3.2.
+   <strong>
+    STEP 2:
+   </strong>
+   Set up the CV
+  </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#next-step-pipelines">
-   5.4.3.2. Next step: Pipelines
+   5.4.3.3. Next step: Pipelines
   </a>
  </li>
 </ul>
@@ -848,18 +837,22 @@ const thebe_selector_output = ".output, .cell_output"
 <p class="admonition-title">Warning</p>
 <p>I say “<em>should</em>” because the exact manner in which you create the folds matters.</p>
 </div>
-<ul class="simple">
-<li><p><strong>If your data has groups</strong> (i.e. repeated observations for a given firm), you should use <a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#group-cv">group-wise cross-validation</a>, like <code class="docutils literal notranslate"><span class="pre">GroupKFold</span></code> to make sure no group is in the training and validation partitions of the fold</p></li>
-<li><p><strong>If your data and/or task is time dependent</strong>, like predicting stock returns,  you should use a <a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#timeseries-cv">time-wise cross-validation</a>, like <code class="docutils literal notranslate"><span class="pre">TimeSeriesSplit</span></code> to ensure that the validation partitions are subsequent to the training sample</p></li>
-</ul>
 <div class="margin sidebar">
 <p class="sidebar-title"></p>
 <p>Illustration: If you emulate the simple folding method as depicted in the above graphic for stock return data, some folds will end up testing your model on data from <em>before</em> the periods where the model was estimated!</p>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong><a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators">This page should be you first reference for available CV splitting options.</a></strong></p>
+<ul class="simple">
+<li><p><strong>If your data has groups</strong> (i.e. repeated observations for a given firm), you should use <a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#group-cv">group-wise cross-validation</a>, like <code class="docutils literal notranslate"><span class="pre">GroupKFold</span></code> to make sure no group is in the training and validation partitions of the fold.</p></li>
+<li><p><strong>If your data and/or task is time dependent</strong>, like predicting stock returns,  you should use a <a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#timeseries-cv">time-wise cross-validation</a>, like <code class="docutils literal notranslate"><span class="pre">TimeSeriesSplit</span></code> to ensure that the validation partitions are subsequent to the training sample.</p></li>
+</ul>
+</div>
 <hr class="docutils" />
-<div class="section" id="cv-in-practice">
-<h2><span class="section-number">5.4.3.1. </span>CV in practice<a class="headerlink" href="#cv-in-practice" title="Permalink to this headline">¶</a></h2>
-<p>Like before, let’s load the data. Notice I consolidated the import lines at the top.</p>
+<div class="section" id="using-cv-in-practice">
+<h2><span class="section-number">5.4.3.1. </span>Using CV in practice<a class="headerlink" href="#using-cv-in-practice" title="Permalink to this headline">¶</a></h2>
+<p>Like before, let’s first load the data. Notice I consolidated the import lines at the top.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -880,8 +873,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<div class="section" id="step-1-set-up-your-test-and-train-split-samples">
-<h3><span class="section-number">5.4.3.1.1. </span><strong>STEP 1:</strong> Set up your test and train split samples<a class="headerlink" href="#step-1-set-up-your-test-and-train-split-samples" title="Permalink to this headline">¶</a></h3>
+<p>And, like before, we then split off some of the data into a testing sample.</p>
+<p><em>For the sake of simplicity (laziness?), let’s just reuse the <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> approach from the last page.</em></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># this helps us control the randomness so we can reproduce results exactly</span>
@@ -890,18 +883,24 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<hr class="docutils" />
-<p><strong>An important digression:</strong> Now that we’ve introduced some of the conceptual issues with how you create folds for CV, let’s revisit this <code class="docutils literal notranslate"><span class="pre">test_train_split</span></code> code above. <a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#using-cross-validation-iterators-to-split-train-and-test">This page</a> says <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> uses <a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#random-permutations-cross-validation-a-k-a-shuffle-split">ShuffleSplit</a>. This method does not divide by time or any group type.</p>
 <details class="sphinx-bs dropdown card mb-3">
 <summary class="summary-title card-header">
-Q: Does this data need special attention to how we divide it up?<div class="summary-down docutils">
+<strong>An important digression:</strong><div class="summary-down docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="summary-up docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="summary-content card-body docutils">
+<p class="card-text">Now that we’ve introduced some of the conceptual issues with how you create folds for CV, let’s revisit this <code class="docutils literal notranslate"><span class="pre">test_train_split</span></code> code above. <a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#using-cross-validation-iterators-to-split-train-and-test">This page</a> says <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> uses <a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#random-permutations-cross-validation-a-k-a-shuffle-split">ShuffleSplit</a>. This method does not divide by time or any group type.</p>
+<details class="sphinx-bs dropdown card mb-3">
+<summary class="summary-title card-header">
+Q: Does this Fannie Mae data need special attention to how we divide it up?<div class="summary-down docutils">
 <svg version="1.1" width="24" height="24" class="octicon octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
 <div class="summary-up docutils">
 <svg version="1.1" width="24" height="24" class="octicon octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
 </summary><div class="summary-content card-body docutils">
 <p class="card-text">A question to ponder, in class perhaps…</p>
 </div>
-</details><p>If you want to use any other CV iterators to divide up your sample, you can:</p>
+</details><p class="card-text">If you want to use any other CV iterators to divide up your sample, you can:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Just replace &quot;GroupShuffleSplit&quot; with your CV of choice,</span>
 <span class="c1"># and update the contents of split() as needed</span>
 
@@ -911,38 +910,42 @@ Q: Does this data need special attention to how we divide it up?<div class="summ
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">test_idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">test_idx</span><span class="p">]</span>
 </pre></div>
 </div>
-<hr class="docutils" />
-<p>Back to our regularly scheduled “CV in Practice” programming.</p>
+</div>
+</details><p>Back to our regularly scheduled “CV in Practice” programming.</p>
 </div>
 <div class="section" id="step-2-set-up-the-cv">
-<h3><span class="section-number">5.4.3.1.2. </span><strong>STEP 2:</strong> Set up the CV<a class="headerlink" href="#step-2-set-up-the-cv" title="Permalink to this headline">¶</a></h3>
-<p>SK-learn makes cross-validation pretty easy. The <code class="docutils literal notranslate"><span class="pre">cross_validate(&quot;estimator&quot;,X_train,y_train,cv,scoring,...)</span></code> function (<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html">documentation here</a>) will</p>
+<h2><span class="section-number">5.4.3.2. </span><strong>STEP 2:</strong> Set up the CV<a class="headerlink" href="#step-2-set-up-the-cv" title="Permalink to this headline">¶</a></h2>
+<p>Sk-learn makes cross-validation pretty easy. We use the <code class="docutils literal notranslate"><span class="pre">cross_validate(&quot;estimator&quot;,X_train,y_train,cv,scoring,...)</span></code> function (<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_validate.html">documentation here</a>) which will</p>
 <ol class="simple">
-<li><p>Create folds in X_train and y_train using the method you put in the <code class="docutils literal notranslate"><span class="pre">cv</span></code> parameter. For each fold, it will create a smaller “training partition” and “testing partition” like in the figure at the top of this page.</p></li>
+<li><p>Create folds in X_train and y_train using whatever method you put in the <code class="docutils literal notranslate"><span class="pre">cv</span></code> parameter. For each fold, it will create a smaller “training partition” and “validation partition” like in the figure at the top of this page.</p></li>
 <li><p>For each fold,</p>
 <ol class="simple">
-<li><p>It will fit your “estimator” (as if you ran <code class="docutils literal notranslate"><span class="pre">estimator.fit(X_trainingpartition,y_trainingpartition)</span></code>) on the smaller training partition it creates. <strong>Your estimator will be a “pipeline” object</strong> (<a class="reference internal" href="04e_pipelines.html"><span class="doc std std-doc">covered in detail on the next page</span></a>) that tells sklearn to apply a series of steps to the data (preprocessing, etc.), culminating in a model.</p></li>
-<li><p>Use that fitted estimator on the testing partition (as if you ran <code class="docutils literal notranslate"><span class="pre">estimator.predict(X_testingpartition)</span></code> will apply all of the data transformations in the pipeline and use the estimated model on it)</p></li>
-<li><p>Score those predictions with the function(s) you put in <code class="docutils literal notranslate"><span class="pre">scoring</span></code></p></li>
+<li><p>It will fit your “estimator” on the smaller training partition it creates for that fold (as if you ran <code class="docutils literal notranslate"><span class="pre">estimator.fit(X_trainingpartition,y_trainingpartition)</span></code>).<em>Note: <strong>Your estimator will actually be a “pipeline” object</strong> (<a class="reference internal" href="04e_pipelines.html"><span class="doc std std-doc">covered in detail on the next page</span></a>) that tells sk-learn to apply a series of steps to the data (preprocessing, etc.) and always ends with a model to estimate.</em></p></li>
+<li><p>Use that fitted estimator on the validation partition (as if you ran <code class="docutils literal notranslate"><span class="pre">estimator.predict(X_validationpartition)</span></code>).</p></li>
+<li><p>Score those predictions with the function(s) you put in <code class="docutils literal notranslate"><span class="pre">scoring</span></code>.</p></li>
 </ol>
 </li>
-<li><p>Output a dictionary object with performance data</p></li>
+<li><p>Output a dictionary object with performance data for each fold.</p></li>
 </ol>
-<p>You can even give it multiple scoring metrics to evaluate.</p>
-<p>So, you need to set up</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>So, to use <code class="docutils literal notranslate"><span class="pre">cross_validate()</span></code>, you need to decide on and set up:</p>
 <ol class="simple">
 <li><p>Your preferred folding method (and number of folds)</p></li>
-<li><p>Your estimator</p></li>
-<li><p>Your scoring method (you can specify this inside the cross_validate function)</p></li>
+<li><p>Your estimator (or pipeline ending in an estimator)</p></li>
+<li><p>Your scoring method(s)</p></li>
 </ol>
+</div>
+<p>It’s this simple:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">KFold</span><span class="p">,</span> <span class="n">cross_validate</span>
 
-<span class="n">cv</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>                          <span class="c1"># set up fold method</span>
+<span class="n">cv</span>    <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>                       <span class="c1"># set up fold method</span>
 <span class="n">ridge</span> <span class="o">=</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>               <span class="c1"># set up model/estimator</span>
-<span class="n">cross_validate</span><span class="p">(</span><span class="n">ridge</span><span class="p">,</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span>
-              <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;r2&#39;</span><span class="p">)</span>     <span class="c1"># tell it the scoring method here</span>
+<span class="n">cross_validate</span><span class="p">(</span><span class="n">ridge</span><span class="p">,</span>
+               <span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> 
+               <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;r2&#39;</span><span class="p">)</span>           <span class="c1"># tell it the scoring method here</span>
 </pre></div>
 </div>
 </div>
@@ -956,14 +959,14 @@ Q: Does this data need special attention to how we divide it up?<div class="summ
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Wow, that was easy! Just 3 lines of code (and an import)</p>
+<p>Wow, that was easy! Just 3 lines of code (and an import).</p>
 </div>
 <p>And we can output test score statistics like:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">ridge</span><span class="p">,</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;r2&#39;</span><span class="p">)</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="c1"># scores is just a dictionary</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scores</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">ridge</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;r2&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>  <span class="c1"># scores is just a dictionary</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -975,9 +978,8 @@ Q: Does this data need special attention to how we divide it up?<div class="summ
 </div>
 </div>
 </div>
-</div>
 <div class="section" id="next-step-pipelines">
-<h2><span class="section-number">5.4.3.2. </span>Next step: Pipelines<a class="headerlink" href="#next-step-pipelines" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">5.4.3.3. </span>Next step: Pipelines<a class="headerlink" href="#next-step-pipelines" title="Permalink to this headline">¶</a></h2>
 <p>The model above</p>
 <ul class="simple">
 <li><p>Only uses a few continuous variables: what if we want to include other variable types (like categorical)?</p></li>
