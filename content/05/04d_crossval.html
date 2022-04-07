@@ -31,8 +31,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/fin377_specialformatting.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/moviescript.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/fin377_specialformatting.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
@@ -843,7 +843,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p><strong><a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators">This page should be you first reference for available CV splitting options.</a></strong></p>
+<p><strong><a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators">This page should be your first reference for available CV splitting options.</a></strong></p>
 <ul class="simple">
 <li><p><strong>If your data has groups</strong> (i.e. repeated observations for a given firm), you should use <a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#group-cv">group-wise cross-validation</a>, like <code class="docutils literal notranslate"><span class="pre">GroupKFold</span></code> to make sure no group is in the training and validation partitions of the fold.</p></li>
 <li><p><strong>If your data and/or task is time dependent</strong>, like predicting stock returns,  you should use a <a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html#timeseries-cv">time-wise cross-validation</a>, like <code class="docutils literal notranslate"><span class="pre">TimeSeriesSplit</span></code> to ensure that the validation partitions are subsequent to the training sample.</p></li>
