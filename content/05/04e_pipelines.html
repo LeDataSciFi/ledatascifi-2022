@@ -913,7 +913,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p>Those are the same numbers as before - good!</p>
-<p>And we can use this pipeline in cross-validation method just like before:</p>
+<p>We can use this pipeline in our cross validation in place of the estimator:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cross_validate</span><span class="p">(</span><span class="n">ridge_pipe</span><span class="p">,</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span>
@@ -949,8 +949,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>Set up a pipeline for categorical variables</p></li>
 <li><p>Set up the ColumnTransformer:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ColumnTransformer()</span></code> is a functions, needs “()”</p></li>
-<li><p>First argument is a list (so now it is <code class="docutils literal notranslate"><span class="pre">ColumnTransformer([])</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ColumnTransformer()</span></code> is a function, so it needs the parentheses “()”</p></li>
+<li><p>The first argument inside it is a list (so now it is <code class="docutils literal notranslate"><span class="pre">ColumnTransformer([])</span></code>)</p></li>
 <li><p>Each element in that list is a tuple that has three parts:</p>
 <ul>
 <li><p>name of the step (you decide the name),</p></li>
@@ -1017,7 +1017,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<p>The data loaded above has no categorical vars, so I’m going to reload the data and keep different variables:</p>
+<p>The data loaded above has no categorical variables, so I’m going to reload the data and keep new variables to illustrate what we can do:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">'TCMR','l_credscore'</span></code> are numerical</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">'Property_state'</span></code> is categorical</p></li>
