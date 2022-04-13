@@ -881,6 +881,11 @@ const thebe_selector_output = ".output, .cell_output"
    Exercises
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bonus-demo-undersampling">
+   Bonus demo: Undersampling
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -1378,6 +1383,37 @@ weighted avg       0.80      0.59      0.65    107843
 <li><p>Write down a profit function for firm using the cells of the confusion matrix. (The four cells of the matrix are TNR, TPR, FNR, and FPR.)</p></li>
 <li><p>Based on your profit function, which metric(s) do you want to maximize/minimize in this model? There might not be a clean answer, if so: Discuss candidates and what they capture correctly about the profit function and what they miss.</p></li>
 </ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># put answers here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="bonus-demo-undersampling">
+<h2>Bonus demo: Undersampling<a class="headerlink" href="#bonus-demo-undersampling" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># !pip install -U imbalanced-learn</span>
+
+<span class="kn">from</span> <span class="nn">imblearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span> <span class="k">as</span> <span class="n">make_pipeline_with_sampler</span>
+<span class="kn">from</span> <span class="nn">imblearn.under_sampling</span> <span class="kn">import</span> <span class="n">RandomUnderSampler</span>
+
+<span class="n">logit_undersamp</span> <span class="o">=</span> <span class="n">make_pipeline_with_sampler</span><span class="p">(</span>
+    <span class="n">preproc_pipe</span><span class="p">,</span>
+    <span class="n">RandomUnderSampler</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+    <span class="n">LogisticRegression</span><span class="p">(),</span>
+<span class="p">)</span>
+
+<span class="n">logit_undersamp</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> 
+
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">logit_undersamp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">,)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 </div>
 
