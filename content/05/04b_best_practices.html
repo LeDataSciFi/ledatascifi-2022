@@ -802,11 +802,18 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="section" id="principles-into-practice">
 <h1><span class="section-number">5.4.1. </span>Principles into Practice<a class="headerlink" href="#principles-into-practice" title="Permalink to this headline">¶</a></h1>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>[Here is a template ipynb file] you can use when putting together a project that follows the pseudocode below.</p>
+</div>
+</div>
 <p>Let’s put the principles from last chapter into code. Here is the pseudocode:</p>
 <ol>
 <li><p>All of your import functions</p></li>
 <li><p>Load data</p></li>
-<li><p>Split your data into 2 subsamples: a “test” and “train” portion as <a class="reference internal" href="03_ML.html"><span class="doc std std-doc">in this page</span></a> or <a class="reference internal" href="03c_ModelEval.html"><span class="doc std std-doc">this page</span></a> or <a class="reference internal" href="03c1_OOS.html"><span class="doc std std-doc">this page</span></a>. This is the first arrow in the picture below.<a class="footnote-reference brackets" href="#pic" id="id1">1</a> We will do all of our work on the “train” sample.</p></li>
+<li><p>Split your data into 2 subsamples: a “training” portion and a “holdout” (aka “test”) portion as <a class="reference internal" href="03_ML.html"><span class="doc std std-doc">in this page</span></a> or <a class="reference internal" href="03c_ModelEval.html"><span class="doc std std-doc">this page</span></a> or <a class="reference internal" href="03c1_OOS.html"><span class="doc std std-doc">this page</span></a>. This is the first arrow in the picture below.<a class="footnote-reference brackets" href="#pic" id="id1">1</a> We will do all of our work on the “train” sample until the very last step.</p></li>
 <li><p>Before modeling, do EDA (<strong>on the training data only!</strong>)</p>
 <ul class="simple">
 <li><p>Sample basics: What is the unit of observation? What time spans are covered?</p></li>
@@ -828,7 +835,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>Combine those pipes into a “preprocessing” pipeline using <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.compose.ColumnTransformer.html#sklearn.compose.ColumnTransformer"><code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code></a></p></li>
 <li><p><a class="reference internal" href="04d_crossval.html"><span class="doc std std-doc">Set up your cross validation method</span></a>:</p>
 <ul class="simple">
-<li><p>The picture below illustrates 5 folds apparently based on the row number.</p></li>
+<li><p>The picture below illustrates 5 folds, apparently based on the row number.</p></li>
 <li><p>There are many <a class="reference external" href="https://scikit-learn.org/stable/modules/classes.html#splitter-classes">CV splitters</a> available, including TimeSeriesSplit (a starting point for asset price predictions) and <a class="reference external" href="https://github.com/getgaurav2/scikit-learn/blob/d4a3af5cc9da3a76f0266932644b884c99724c57/sklearn/model_selection/_split.py#L2243">GroupTimesSeriesSplit</a> is in development (which addresses a core problem with TimeSeriesSplit, and <a class="reference external" href="https://www.kaggle.com/jorijnsmit/found-the-holy-grail-grouptimeseriessplit">is shown in practice here</a>)</p></li>
 </ul>
 </li>
@@ -852,53 +859,6 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </li>
 </ol>
-<hr class="docutils" />
-<p>Here is that outline, but as a block of code you can use as a blueprint in projects:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import lots of functions</span>
-<span class="c1"># load data </span>
-<span class="c1"># split to test and train (link to split page/sk docs)</span>
-
-<span class="c1">## pre-modeling (on the training data only!)</span>
-
-<span class="c1"># do lots of EDA</span>
-<span class="c1"># look for missing values, which variables are what type, and outliers </span>
-<span class="c1"># figure out how you&#39;d clean the data (imputation, scaling, encoding categorical vars)</span>
-<span class="c1"># these lessons will go into the preprocessign portion of your pipeline </span>
-
-<span class="c1">## optimize a series of models </span>
-
-<span class="c1"># set up pipeline to clean each type of variable (1 pipe per var type)</span>
-<span class="c1"># combine those pipes into &quot;preprocess&quot; pipe</span>
-<span class="c1"># set up cv (can set up iterable to do OOS! or TimeSeriesSplit, or...)</span>
-<span class="c1"># set up scoring </span>
-
-<span class="c1">## optimize candidate model type #1: </span>
-
-<span class="c1">#     set up pipeline (combines preprocessing, estimator)</span>
-<span class="c1">#     set up hyper param grid</span>
-<span class="c1">#     find optimal hyper params (gridsearchcv)</span>
-<span class="c1">#     save pipeline with optimal params in place</span>
-<span class="c1">#     (Note: you should spend time interrogating model predictions, plotting and printing.</span>
-<span class="c1">#     Does the model struggle predicting certain obs? Excel at some?)</span>
-
-<span class="c1">## optimize candidate model type #2</span>
-
-<span class="o">...</span>
-
-<span class="c1">## optimize candidate model type #N</span>
-
-<span class="c1">## compare the N optimized models</span>
-
-<span class="c1"># build list of models (each with own optimized hyperparams)</span>
-<span class="c1"># for model in models:</span>
-<span class="c1">#    cross_validate(model, X, y,...)</span>
-<span class="c1"># pick the winner!</span>
-</pre></div>
-</div>
-</div>
-</div>
 <hr class="docutils" />
 <hr class="footnotes docutils" />
 <dl class="footnote brackets">
