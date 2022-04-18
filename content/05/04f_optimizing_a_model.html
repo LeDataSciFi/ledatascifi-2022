@@ -1022,14 +1022,14 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="section" id="tuning-hyperparameters">
 <h2><span class="section-number">5.4.6.2. </span>Tuning hyperparameters<a class="headerlink" href="#tuning-hyperparameters" title="Permalink to this headline">¶</a></h2>
-<p>The basic idea is to repeatedly run the pipeline through a cross-validation while changing the hyperparameters to improve you CV scores.</p>
+<p>The basic idea is to repeatedly run the pipeline through a cross-validation while changing the hyperparameters to improve your CV scores.</p>
 <p>To use GridSearchCV</p>
 <ol>
 <li><p>Set up your parameter grids (all of the parameters you would like to test).</p>
 <ul class="simple">
 <li><p><strong>Initially, cast a wide and sparse net.</strong></p></li>
-<li><p>After running it once, we can run it again with more parameter values where we think the best CV.</p></li>
-<li><p>We will iterate on this…</p></li>
+<li><p>After running it once, we can run it again with more parameter values in the regions that we think the best model is in.</p></li>
+<li><p>We will iterate on this, and repeat as needed…</p></li>
 </ul>
 </li>
 <li><p>Set up GridSearchCV</p></li>
