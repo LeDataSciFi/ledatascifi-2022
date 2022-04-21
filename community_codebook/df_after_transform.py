@@ -55,6 +55,10 @@ def df_after_transform(estimator,data):
 
     '''
     
+    import sklearn
+    if not isinstance(estimator, sklearn.compose._column_transformer.ColumnTransformer):
+        raise Exception('This function only accepts a column transformer')
+        
     from sklearn.feature_extraction.text import _VectorizerMixin
     from sklearn.feature_selection._base import SelectorMixin
     import pandas as pd
@@ -63,13 +67,13 @@ def df_after_transform(estimator,data):
 
     def get_feature_out(estimator, feature_in):
         
-        if hasattr(estimator,'get_feature_names'):
+        if hasattr(estimator,'get_feature_names_out'):
             if isinstance(estimator, _VectorizerMixin):
                 # handling all vectorizers
                 return [f'vec_{f}' \
-                    for f in estimator.get_feature_names()]
+                    for f in estimator.get_feature_names_out()]
             else:
-                return estimator.get_feature_names(feature_in)
+                return estimator.get_feature_names_out(feature_in)
         elif isinstance(estimator, SelectorMixin):
             return np.array(feature_in)[estimator.get_support()]
         else:
@@ -102,5 +106,4 @@ def df_after_transform(estimator,data):
         trans_df = trans_df.toarray()
         
     return pd.DataFrame(trans_df,columns=get_ct_feature_names(estimator))
-
 
