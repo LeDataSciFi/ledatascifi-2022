@@ -55,6 +55,10 @@ def df_after_transform(estimator,data):
 
     '''
     
+    import sklearn
+    if not isinstance(estimator, sklearn.compose._column_transformer.ColumnTransformer):
+        raise Exception('This function only accepts a column transformer')
+        
     from sklearn.feature_extraction.text import _VectorizerMixin
     from sklearn.feature_selection._base import SelectorMixin
     import pandas as pd
