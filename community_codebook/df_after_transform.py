@@ -14,6 +14,7 @@ def df_after_transform(estimator,data):
         from sklearn.preprocessing import StandardScaler, OneHotEncoder
         from sklearn.impute import SimpleImputer
         from sklearn.compose import ColumnTransformer
+        from sklearn.linear_model import Lasso
         
         X_train = pd.DataFrame({'prof_a': [23,12, 12, -4.5],
                               'industry': ['medical','medical', 'tech','tech']})        
@@ -37,6 +38,19 @@ def df_after_transform(estimator,data):
         >    1  0.140028               1.0            0.0
         >    2  0.140028               0.0            1.0
         >    3 -1.540308               0.0            1.0
+
+        ######################################################################
+        # warning - this function ONLY works with a ColumnTransformer object
+        # for example, these next two commands will NOT work:
+        ######################################################################
+        
+        # if your pipeline has an estimator after the CT, this fcn will fail:
+        
+        df_after_transform(make_pipeline(combined_pipe,Lasso()), X_train)
+        
+        # if your pipeline is just a simple transformer, this fcn will fail:
+        
+        df_after_transform(SimpleImputer(), X_train)        
 
     ==================================================================
     
